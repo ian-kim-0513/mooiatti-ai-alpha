@@ -20,7 +20,7 @@ with st.sidebar:
     - [Mooiatti Dealer's Portal](https://mooiatti.me/)
  
     ''')
-    add_vertical_space(15)
+    # add_vertical_space(15)
     st.write('Made with ❤️ by Mooiatti')
 
 def main():
