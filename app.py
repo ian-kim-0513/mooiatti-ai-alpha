@@ -1,23 +1,33 @@
+
+
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
-from PyPDF2 import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
 import pickle
 from dotenv import load_dotenv
 import os
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
-from langchain.callbacks import get_openai_callback
+
+from langchain.chat_models import ChatOpenAI
+from langchain.chains import RetrievalQA
+from langchain.document_loaders import GoogleDriveLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
 
 with st.sidebar:
-    st.title('Mooiatti Chat App (alpha)')
+    st.title('🤗💬 Mooiatti Chat App')
     st.markdown('''
     ## About
     This app is an AI chatbot for Mooiatti:
     - [Mooiatti](https://mooiatti.com/)
-    - [Mooiatti Dealer's Portal](https://mooiatti.me/)
+    - [Mooiatti Portal](https://mooiatti.me/)
+
+    ## Example
+    #### 한글
+    - 1970년대 80년대 빈티지 의자를 추천해줘
+    - 빨간색 의자, 심플한 디자인을 찾아줘
+    - arne jacobsen 제품을 링크와 사진도 함께 보여줘
+    #### 日本語
+    - 木の椅子を探していますが、シンプルなデザインで3つおすすめしてください。 リンクも一緒
  
     ''')
     add_vertical_space(15)
@@ -25,64 +35,46 @@ with st.sidebar:
 
 def main():
     st.header('Chat with Mooiatti AI')
-    st.write("hello")
+    st.write("모이아띠 AI 에게 물어보세요")
 
     load_dotenv()
 
-    # upload a PDF file
-    pdf = st.file_uploader("Upload your PDF", type='pdf')
-    
-    # st.write(pdf)
-    if pdf is not None:
-        pdf_reader = PdfReader(pdf)
-        
-        text = ""
-        for page in pdf_reader.pages:
-            text += page.extract_text()
+    st.write("GLoading ...")
+    loader = GoogleDriveLoader(
+        folder_id="1xTSGtI0XdFfJeHqS2CBJ6gBH8-JjlP2j",
+        recursive=False
+    )
+    docs = loader.load()
+    st.write("Loading Done ...")
 
-        # st.write(text)
+    st.write("RecursiveCharacterTextSplitter ...")
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
+        )
 
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=2000,
-            chunk_overlap=400,
-            length_function=len
-            )
-        chunks = text_splitter.split_text(text=text)
+    st.write("split_documents ...")
+    texts = text_splitter.split_documents(docs)
+    st.write("OpenAIEmbeddings ...")
+    embeddings = OpenAIEmbeddings()
+    st.write("vector db from_documents ...")
+    db = Chroma.from_documents(texts, embeddings)
+    st.write("as_retriever ...")
+    retriever = db.as_retriever()
 
-        # st.write(chunks)
+    st.write("ChatOpenAI ...")
 
-        # # embeddings
-        store_name = pdf.name[:-4]
-        st.write(f'{store_name}')
-        # st.write(chunks)
- 
-        if os.path.exists(f"{store_name}.pkl"):
-            with open(f"{store_name}.pkl", "rb") as f:
-                VectorStore = pickle.load(f)
-            st.write('Embeddings Loaded from the Disk')
-        else:
-            embeddings = OpenAIEmbeddings()
-            VectorStore = FAISS.from_texts(chunks, embedding=embeddings)
-            with open(f"{store_name}.pkl", "wb") as f:
-                pickle.dump(VectorStore, f)
-            st.write('Embeddings Computation Completed')
+    llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+    st.write("RetrievalQA ...")
+    qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
+    st.write("Ready ...")
 
+    # Accept user questions/query
+    query = st.text_input("Ask Mooiatti:")
+    st.write(query)
 
-        # Accept user questions/query
-        query = st.text_input("Ask Mooiatti:")
-        st.write(query)
-  
-        if query:
-            docs = VectorStore.similarity_search(query=query, k=3)
-
-            # llm = OpenAI()
-            llm = OpenAI(model_name='gpt-3.5-turbo')
-            # llm = OpenAI(model_name='gpt-3.5-turbo-16k')
-            chain = load_qa_chain(llm=llm, chain_type="stuff")
-            with get_openai_callback() as cb:
-                response = chain.run(input_documents=docs, question=query)
-                print(cb)
-            st.write(response)
+    if query:
+        response = qa.run(query)
+        st.write(response)
 
 if __name__ == '__main__':
     main()
