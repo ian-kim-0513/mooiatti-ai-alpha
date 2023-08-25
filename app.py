@@ -58,3 +58,5 @@ def main():
     docs = loader.load()
     st.write("Loading Done ...")
 
+if __name__ == '__main__':
+    main()
