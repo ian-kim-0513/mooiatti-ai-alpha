@@ -6,3 +6,4 @@ faiss-cpu
 streamlit-extras
 altair==4.0
 gsheetsdb==0.1.13.1
+google-api-python-client
