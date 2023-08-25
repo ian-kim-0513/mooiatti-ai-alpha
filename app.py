@@ -1,6 +1,7 @@
-
-
 import streamlit as st
+from google.oauth2 import service_account
+from gsheetsdb import connect
+
 from streamlit_extras.add_vertical_space import add_vertical_space
 import pickle
 from dotenv import load_dotenv
@@ -12,6 +13,15 @@ from langchain.document_loaders import GoogleDriveLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
+
+# Create a connection object.
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+    ],
+)
+conn = connect(credentials=credentials)
 
 with st.sidebar:
     st.title('🤗💬 Mooiatti Chat App')
