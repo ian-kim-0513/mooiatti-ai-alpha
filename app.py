@@ -49,3 +49,12 @@ with st.sidebar:
 def main():
     st.header('Chat with Mooiatti AI')
     st.write("모이아띠 AI 에게 물어보세요")
+
+    st.write("GLoading ...")
+    loader = GoogleDriveLoader(
+        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
+        recursive=False
+    )
+    docs = loader.load()
+    st.write("Loading Done ...")
+
