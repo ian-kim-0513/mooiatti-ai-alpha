@@ -52,7 +52,7 @@ def main():
     
     st.write("GLoading ...")
     loader = GoogleDriveLoader(
-        folder_id="1xTSGtI0XdFfJeHqS2CBJ6gBH8-JjlP2j",
+        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
         recursive=False
     )
     docs = loader.load()
