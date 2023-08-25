@@ -51,8 +51,9 @@ def main():
     st.write("모이아띠 AI 에게 물어보세요")
 
     st.write("GLoading ...")
+#   folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
     loader = GoogleDriveLoader(
-        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
+        folder_id="Ze95L2lBfoojCA8tj6o56lnw0",
         recursive=False
     )
     docs = loader.load()
