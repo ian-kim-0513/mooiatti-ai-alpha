@@ -69,7 +69,7 @@ def main():
         folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
         recursive=False
     )
-    docs = loader.load()
+    #docs = loader.load()
     st.write("Loading Done ...")
 
 if __name__ == '__main__':
