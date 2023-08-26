@@ -54,10 +54,15 @@ def main():
     st.write("모이아띠 AI 에게 물어보세요")
     
     st.write("GLoading ...")
-    loader = GoogleDriveLoader(
-        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
-        recursive=False
-    )
+
+    
+    spreadsheet_id = "1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"
+    loader = GoogleDriveLoader(file_ids=[spreadsheet_id])
+
+#    loader = GoogleDriveLoader(
+#        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
+#        recursive=False
+#    )
     st.write(loader)
 #    docs = loader.load()
     st.write("Loading Done2 ...")
