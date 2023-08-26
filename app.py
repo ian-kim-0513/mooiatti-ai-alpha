@@ -72,6 +72,17 @@ def main():
         chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
     )
 
+    st.write("split_documents ...")
+    texts = text_splitter.split_documents(rows)
+    st.write("OpenAIEmbeddings ...")
+    embeddings = OpenAIEmbeddings()
+    st.write("vector db from_documents ...")
+    db = Chroma.from_documents(texts, embeddings)
+    st.write("as_retriever ...")
+    retriever = db.as_retriever()
+
+    st.write("ChatOpenAI ...")
+
 
     # Print results.
     # for row in rows:
