@@ -10,7 +10,7 @@ credentials = service_account.Credentials.from_service_account_info(
     scopes=[
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive",
-    ],
+    ]
 )
 conn = connect(credentials=credentials)
 
