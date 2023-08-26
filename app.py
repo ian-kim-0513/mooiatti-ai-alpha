@@ -53,7 +53,7 @@ def main():
     st.header('Chat with Mooiatti AI')
     st.write("모이아띠 AI 에게 물어보세요")
     
-    st.write("GLoading ...")
+    st.write("GLoading 2 ...")
 
     
     spreadsheet_id = "1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"
