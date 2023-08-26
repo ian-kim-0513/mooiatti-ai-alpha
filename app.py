@@ -54,30 +54,21 @@ def main():
     st.write("모이아띠 AI 에게 물어보세요")
     
     st.write("GLoading 2 ...")
-
+        
+    # Perform SQL query on the Google Sheet.
+    # Uses st.cache_data to only rerun when the query changes or after 10 min.
+    # @st.cache_data(ttl=600)
+    def run_query(query):
+        rows = conn.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
     
-    loader = GoogleDriveLoader(
-        folder_id="1xTSGtI0XdFfJeHqS2CBJ6gBH8-JjlP2j",
-        recursive=False
-    )
+    sheet_url = st.secrets["private_gsheets_url"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
     
-    st.write(loader)
-    
-    docs = loader.load()
-    st.write(docs)
-
-
-
-
-    
-#    loader = GoogleDriveLoader(
-#        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
-#        recursive=False
-#    )
-#    docs = loader.load()
-    st.write("Loading Done2 ...")
-
-
+    # Print results.
+    for row in rows:
+        st.write(f"{row.Title} has a :{row.Type}:")
 
 if __name__ == '__main__':
     main()
