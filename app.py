@@ -69,8 +69,8 @@ def main():
         document_ids=["1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"],
         recursive=False
     )
-    #docs = loader.load()
-    st.write("Loading Done ...")
+    docs = loader.load()
+    st.write("Loading Done 2 ...")
 
 if __name__ == '__main__':
     main()
