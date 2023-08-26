@@ -65,7 +65,7 @@ def main():
     
     sheet_url = st.secrets["private_gsheets_url"]
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
-    sf.write("rows retrieved")
+    st.write("rows retrieved")
 
     st.write("RecursiveCharacterTextSplitter ...")
     text_splitter = RecursiveCharacterTextSplitter(
