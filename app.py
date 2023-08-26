@@ -18,6 +18,7 @@ conn = connect(credentials=credentials)
 import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 import pickle
+import os
 
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
