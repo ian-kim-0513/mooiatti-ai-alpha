@@ -59,7 +59,7 @@ def main():
         recursive=False
     )
 #    docs = loader.load()
-    st.write("Loading Done ...")
+    st.write("Loading Done2 ...")
 
 
 
