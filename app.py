@@ -68,10 +68,10 @@ def main():
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
     st.write("rows retrieved")
 
-    #st.write("RecursiveCharacterTextSplitter ...")
-    #text_splitter = RecursiveCharacterTextSplitter(
-    #    chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
-    #)
+    st.write("RecursiveCharacterTextSplitter ...")
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
+    )
 
     #st.write("split_documents ...")
     #texts = text_splitter.split_documents(rows)
