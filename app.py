@@ -64,30 +64,13 @@ def main():
         rows = rows.fetchall()
         return rows
     
-    sheet_url = st.secrets["private_gsheets_url"]
-    rows = run_query(f'SELECT * FROM "{sheet_url}"')
-    st.write("rows retrieved")
 
-    st.write("RecursiveCharacterTextSplitter ...")
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
+    loader = GoogleDriveLoader(
+        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
+        recursive=False
     )
-
-    st.write("split_documents ...")
-    texts = text_splitter.split_documents(rows)
-    st.write("OpenAIEmbeddings ...")
-    embeddings = OpenAIEmbeddings()
-    st.write("vector db from_documents ...")
-    db = Chroma.from_documents(texts, embeddings)
-    st.write("as_retriever ...")
-    retriever = db.as_retriever()
-
-    st.write("ChatOpenAI ...")
-
-
-    # Print results.
-    # for row in rows:
-        # st.write(f"{row.Title} has a :{row.Type}:")
+    docs = loader.load()
+    st.write("Loading Done ...")
 
 if __name__ == '__main__':
     main()
