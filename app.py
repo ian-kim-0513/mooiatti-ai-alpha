@@ -66,7 +66,7 @@ def main():
     
 
     loader = GoogleDriveLoader(
-        file_id="1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs",
+        document_ids=["1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"],
         recursive=False
     )
     #docs = loader.load()
