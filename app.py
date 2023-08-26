@@ -58,6 +58,8 @@ def main():
     
     spreadsheet_id = "1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"
     loader = GoogleDriveLoader(file_ids=[spreadsheet_id])
+    docs = loader._load_sheet_from_id(spreadsheet_id)
+
 
 #    loader = GoogleDriveLoader(
 #        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
