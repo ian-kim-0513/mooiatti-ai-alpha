@@ -21,6 +21,8 @@ import pickle
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import GoogleDriveLoader
+from langchain.document_loaders import UnstructuredFileIOLoader
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
@@ -51,10 +53,12 @@ def main():
     st.write("모이아띠 AI 에게 물어보세요")
     
     st.write("GLoading ...")
+    file_id = "1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"
     loader = GoogleDriveLoader(
-        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
-        recursive=False
-    )
+        file_ids=[file_id],
+        file_loader_cls=UnstructuredFileIOLoader,
+        file_loader_kwargs={"mode": "elements"},
+    ) 
     docs = loader.load()
     st.write("Loading Done ...")
 
