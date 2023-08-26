@@ -58,6 +58,7 @@ def main():
         folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
         recursive=False
     )
+    st.write(loader)
 #    docs = loader.load()
     st.write("Loading Done2 ...")
 
