@@ -5,14 +5,14 @@ from google.oauth2 import service_account
 from gsheetsdb import connect
 
 # Create a connection object.
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"],
-    scopes=[
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive"
-    ]
-)
-conn = connect(credentials=credentials)
+#credentials = service_account.Credentials.from_service_account_info(
+#    st.secrets["gcp_service_account"],
+#    scopes=[
+#        "https://www.googleapis.com/auth/spreadsheets",
+#        "https://www.googleapis.com/auth/drive"
+#    ]
+#)
+#conn = connect(credentials=credentials)
 
 
 import streamlit as st
@@ -59,16 +59,16 @@ def main():
     # Perform SQL query on the Google Sheet.
     # Uses st.cache_data to only rerun when the query changes or after 10 min.
     # @st.cache_data(ttl=600)
-    def run_query(query):
-        rows = conn.execute(query, headers=1)
-        rows = rows.fetchall()
-        return rows
+    #def run_query(query):
+    #    rows = conn.execute(query, headers=1)
+    #    rows = rows.fetchall()
+    #    return rows
     
-
     loader = GoogleDriveLoader(
-        file_ids=["1UHH6ZJjA3BvYAP8Zx7BQw01FBJOzTbdAW3yg_o8uifs"],
+        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
         recursive=False
     )
+    docs = loader.load()
     #st.write(loader)
     docs = loader.load()
     st.write("Loading Done 2 ...")
