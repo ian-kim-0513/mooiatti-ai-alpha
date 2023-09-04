@@ -70,8 +70,7 @@ def main():
     )
     st.write(loader)
     docs = loader.load()
-    #st.write(loader)
-    docs = loader.load()
+    st.write(docs)
     st.write("Loading Done 2 ...")
 
 if __name__ == '__main__':
