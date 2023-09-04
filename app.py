@@ -5,14 +5,14 @@ from google.oauth2 import service_account
 from gsheetsdb import connect
 
 # Create a connection object.
-#credentials = service_account.Credentials.from_service_account_info(
-#    st.secrets["gcp_service_account"],
-#    scopes=[
-#        "https://www.googleapis.com/auth/spreadsheets",
-#        "https://www.googleapis.com/auth/drive"
-#    ]
-#)
-#conn = connect(credentials=credentials)
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+)
+conn = connect(credentials=credentials)
 
 
 import streamlit as st
@@ -55,6 +55,8 @@ def main():
     st.write("모이아띠 AI 에게 물어보세요")
     
     st.write("GLoading 2 ...")
+
+    st.write(conn)
         
     # Perform SQL query on the Google Sheet.
     # Uses st.cache_data to only rerun when the query changes or after 10 min.
