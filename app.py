@@ -74,11 +74,11 @@ def main():
     #    st.write(f"{row.Title} has a :{row.Type}:")
 
 
-    #loader = GoogleDriveLoader(
-    #    folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
-    #    recursive=False
-    #)
-    #st.write(loader)
+    loader = GoogleDriveLoader(
+        folder_id="1x_Ze95L2lBfoojCA8tj6o56lnw0_-Hiy",
+        recursive=False
+    )
+    st.write(loader)
     #docs = loader.load()
     #st.write(docs)
     #st.write("Loading Done 2 ...")
