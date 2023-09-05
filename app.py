@@ -70,7 +70,6 @@ def main():
     rows = run_query(f'SELECT * FROM "{sheet_url}"')
     
     # Print results.
-    st.write(rows.length)
     #for row in rows:
     #    st.write(f"{row.Title} has a :{row.Type}:")
 
